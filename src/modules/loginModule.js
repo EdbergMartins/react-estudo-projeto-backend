@@ -5,23 +5,22 @@ const { v4: uuidv4 } = require('uuid');
 require('dotenv').config()
 
 const verifyPassword = async (passwordReceived, hashBd) => {
-
-  bcrypt.compare(passwordReceived, hashBd, (err, result) => {
-    if (err) {
-      console.error('Erro na comparação de senhas:', err);
-      return err
-    } else {
-      if (result) {
-        console.log('Senha válida');
-        return true
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(passwordReceived, hashBd, (err, result) => {
+      if (err) {
+        console.error('Erro na comparação de senhas:', err);
+        reject(err);
       } else {
-        console.log('Senha inválida');
-        return false
+        if (result) {
+          console.log('Senha válida');
+          resolve(true);
+        } else {
+          console.log('Senha inválida');
+          resolve(false);
+        }
       }
-    }
+    });
   });
-
-
 }
 
 
@@ -38,7 +37,7 @@ const loginUser = async (user) => {
       return userWithJwt
     }
     else {
-      return 'Usuário não cadastrado.';
+      return 'Dados incorretos, tente novamente.';
     }
   } catch (error) {
     console.error('Erro ao registrar o usuário:', error);
