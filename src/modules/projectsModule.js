@@ -2,6 +2,12 @@ const connection = require('./conections')
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config()
 
+const getProjectsUser = async (id) => {
+  const [projects] = await connection.execute(`SELECT * FROM projects WHERE id_user = ?`, [id.id]);
+  console.log(projects)
+  return projects
+}
+
 const createProject = async (project) => {
   const { name, budget, category, idUser } = project
   const createdDateUtc = new Date(Date.now());
@@ -18,10 +24,21 @@ const editProject = async (project) => {
   return projectCreated[0];
 };
 
-
-
+const deleteProject = async (id) => {
+  const [verifyProject] = await connection.execute(`SELECT * FROM projects WHERE id = ?;`, [id.id]);
+  console.log(verifyProject)
+  if (verifyProject.length === 1) {
+    const [deleteProject] = await connection.execute('DELETE FROM projects WHERE id = ?', [id.id])
+    return "Projeto deletado com sucesso."
+  } else {
+    return "Projeto não encontrado."
+  }
+  return
+}
 
 module.exports = {
   createProject,
-  editProject
+  editProject,
+  deleteProject,
+  getProjectsUser
 };

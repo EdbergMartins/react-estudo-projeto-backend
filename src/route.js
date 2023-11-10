@@ -10,5 +10,7 @@ router.post('/register', registerController.registerUser)
 router.get('/login', loginController.loginUser)
 router.post('/project', projectsController.createProject)
 router.put('/project', projectsController.editProject)
+router.delete('/project', projectsController.deleteProject)
+router.get('/project', projectsController.getProjectsUser)
 
 module.exports = router;
