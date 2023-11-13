@@ -28,12 +28,12 @@ const loginUser = async (user) => {
   const { email, password } = user.body;
   try {
     const [unicUser] = await connection.execute('SELECT * FROM users WHERE email = ?', [email]);
-    const validPassword = await verifyPassword(password, unicUser[0].password)
-    console.log(validPassword)
-    if (unicUser[0].id != undefined && validPassword) {
+    const validPassword = unicUser.length > 0 ? await verifyPassword(password, unicUser[0].password) : null
+    if (unicUser.length != 0 && validPassword !== null) {
       const secretKey = process.env.KEY_JWT;
       const token = jwt.sign(unicUser[0], secretKey, { expiresIn: '1h' });
       const userWithJwt = { ...unicUser[0], token }
+      delete userWithJwt.password
       return userWithJwt
     }
     else {

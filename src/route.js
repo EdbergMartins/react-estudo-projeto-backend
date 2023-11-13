@@ -7,7 +7,7 @@ const express = require('express')
 const router = express.Router();
 
 router.post('/register', registerController.registerUser)
-router.get('/login', loginController.loginUser)
+router.post('/login', loginController.loginUser)
 router.post('/project', projectsController.createProject)
 router.put('/project', projectsController.editProject)
 router.delete('/project', projectsController.deleteProject)

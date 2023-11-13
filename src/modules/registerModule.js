@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const connection = require('./conections')
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
+const loginModule = require('./loginModule')
 require('dotenv').config()
 
 const hashPassword = async (password) => {
@@ -30,7 +31,9 @@ const registerUser = async (user) => {
     const unicUser = await connection.execute('SELECT * FROM users WHERE email = ?', [email]);
     if (unicUser[0].length === 0) {
       const [createUser] = await connection.execute('INSERT INTO users (id,email, password, created_at) VALUES (?, ?, ?, ?)', [id, email, passwordCrypto, createdDateUtc]);
-      return createUser
+      const createduser = await connection.execute('SELECT * FROM users WHERE email = ?', [email])
+      delete createduser[0][0].password
+      return createduser[0][0]
     } else {
       return 'Usuário já cadastrado';
     }
