@@ -36,7 +36,7 @@ const deleteProject = async (rec, res) => {
 
 const getProjectsUser = async (rec, res) => {
   try {
-    const getProjectsUser = await projectsModule.getProjectsUser(rec.body)
+    const getProjectsUser = await projectsModule.getProjectsUser(rec.query.idUser)
     return res.status(200).json(getProjectsUser)
   } catch (error) {
     return res.status(500).json({ error: 'Erro ao encontrar o projeto' });

@@ -3,12 +3,12 @@ const { v4: uuidv4 } = require('uuid');
 require('dotenv').config()
 
 const getProjectsUser = async (id) => {
-  const [projects] = await connection.execute(`SELECT * FROM projects WHERE id_user = ?`, [id.id]);
-  console.log(projects)
+  const [projects] = await connection.execute(`SELECT * FROM projects WHERE id_user = ?`, [id]);
   return projects
 }
 
 const createProject = async (project) => {
+  console.log(project)
   const { name, budget, category, idUser } = project
   const createdDateUtc = new Date(Date.now());
   const id = uuidv4();
