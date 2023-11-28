@@ -8,7 +8,6 @@ const getProjectsUser = async (id) => {
 }
 
 const createProject = async (project) => {
-  console.log(project)
   const { name, budget, category, idUser } = project
   const createdDateUtc = new Date(Date.now());
   const id = uuidv4();

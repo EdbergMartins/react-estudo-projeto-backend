@@ -4,12 +4,12 @@ const { DataTypes } = require('sequelize');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('CreditValue', {
+    await queryInterface.createTable('Transactions', {
       id: {
+        type: DataTypes.STRING(255),
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+
       },
       idProject: {
         type: Sequelize.STRING,
@@ -20,23 +20,26 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      valueAcreced: {
-        type: Sequelize.FLOAT // Assuming you meant FLOAT for decimal values
-      },
-      motiveAcrece: {
-        type: Sequelize.STRING
-      },
-      createdAt: {
+      description: {
+        type: DataTypes.STRING(255),
         allowNull: false,
-        type: Sequelize.DATE
       },
-      updatedAt: {
+      value: {
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
-        type: Sequelize.DATE
+      },
+      type: {
+        type: DataTypes.ENUM('credit', 'debit'),
+        allowNull: false,
+      },
+      data_transaction: {
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        allowNull: false,
       }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('CreditValue');
+    await queryInterface.dropTable('Transactions');
   }
 };
