@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 require('dotenv').config()
 
 const getProjectsUser = async (id) => {
+  console.log(id)
   const [projects] = await connection.execute(`SELECT * FROM projects WHERE id_user = ?`, [id]);
   return projects
 }

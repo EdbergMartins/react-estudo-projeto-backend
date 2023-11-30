@@ -2,7 +2,7 @@ const movimentationFinance = require('../modules/movimentationFinanceModule')
 
 const registerDebit = async (req, res) => {
   try {
-    const registredDebit = await movimentationFinance.registerDebit(req.body);
+    const registredDebit = await movimentationFinance.registerDebit(req.body.params);
     return res.status(200).json(registredDebit);
   } catch (error) {
     console.error('Erro ao criar o projeto:', error);
@@ -12,7 +12,7 @@ const registerDebit = async (req, res) => {
 
 const registerCredit = async (req, res) => {
   try {
-    const registredCredit = await movimentationFinance.registerCredit(req.body);
+    const registredCredit = await movimentationFinance.registerCredit(req.body.params);
     return res.status(200).json(registredCredit);
   } catch (error) {
     console.error('Erro ao editar projeto:', error);
